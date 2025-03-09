@@ -7,7 +7,7 @@ This project is focused on the creation of a tool for the automation of web deve
 ### API Key
 
 Replace .env.example file with a real .env file containing a valid DeepSeek API key (use OpenRouter for a free key)
-git s
+
 ### Virtual Environment Notes
 
 - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process

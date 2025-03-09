@@ -2,7 +2,9 @@
 
 ### Project Overview
 
-This project is focused on the creation of a tool for the automation of web development. The end goal is to produce a program that can take a natural language prompt from the user outlining a set of instructions for a website. The program then queries the DeepSeek model through the DeepSeek API (using a free OpenRouter API key), instructing it to provide a JSON file containing all the necessary directories and code files for the website. The program then processes this JSON to generate the files in an output directory on the user's device.
+This project is focused on the creation of a tool for the automation of web development. The end goal is to produce the following:
+
+Through a web front-end, the user inputs a natural language description of a website they wish to create. The back-end then takes this natural language request and inputs it (with additional context) to the DeepSeek API. The DeepSeek model then creates a JSON file detailing all the necessary directories and code files to fulfil the user's request. The program then creates these files and directories and uploads them to the site. The user can then download the files to test and fine-tune the code.
 
 ### API Key
 
@@ -13,3 +15,10 @@ Replace .env.example file with a real .env file containing a valid DeepSeek API 
 - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 - .\venv\Scripts\Activate.ps1
 - pip install requests python-dotenv
+
+### DeepSeek Query
+
+Considerations:
+
+- Prompt engineering
+- Parameters (temperature, etc)

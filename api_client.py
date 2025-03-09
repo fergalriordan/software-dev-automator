@@ -19,11 +19,40 @@ def query_deepseek(prompt):
         "messages": [
         {
             "role": "user",
-            "content": f"{prompt}"
+            "content": '''You are an expert web developer. Generate a web development project based on the following prompt: {prompt}
+                    
+                    Your response should be a valid JSON object with the following structure:
+
+                    {{
+                        "project_name": "<project_name>",
+                        "files": [
+                            {{
+                                "path": "<relative_path>", 
+                                "content": "<file_content>"
+                            }},
+                            ...
+                        ]
+                    }}
+
+                    - `project_name` should be a short, descriptive name based on the prompt.
+                    - The `files` array should contain all necessary files for the project, including HTML, CSS, JavaScript, and any backend code if applicable.
+                    - `path` should specify the relative directory structure (e.g., `"index.html"`, `"src/main.js"`, `"styles/style.css"`).
+                    - `content` should contain the actual code for each file.
+                    - Ensure that the generated code is functional, well-structured, and follows best practices.
+                    - If a framework (e.g., React, Flask) is required based on the prompt, structure the project accordingly.
+                    
+                    Return only the JSON object with no extra explanation. Don't return the JSON object in markdown or other formats - just plain text in JSON format. Your output is being fed directly into a program, so it needs to be parsible asa valid JSON object.'''
         }
         ],
         
     })
     )
 
-    return response
+    try:
+        data = response.json()  # Convert response to a dictionary
+        project_json = json.loads(data["choices"][0]["message"]["content"])  # Parse the model's JSON output
+        return project_json  # Now it's a proper Python dictionary
+    except (json.JSONDecodeError, KeyError, IndexError) as e:
+        print(f"Error parsing JSON: {e}")
+        return None
+    

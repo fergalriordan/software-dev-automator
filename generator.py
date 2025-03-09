@@ -1,18 +1,18 @@
-import os
+# generate the directory structure and files based on the json data
 import json
-from pathlib import Path
+import os
 
-def generate_project(structure, output_dir):
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
-    
-    for item in structure:
-        path = os.path.join(output_dir, item['name'])
-        if item['type'] == 'directory':
-            os.makedirs(path, exist_ok=True)
-        elif item['type'] == 'file':
-            with open(path, 'w') as f:
-                f.write(item.get('content', ''))
+def create_project(file):
+    # read the json file
+    with open(file, 'r') as f:
+        data = json.load(f)
 
-def create_readme(content, output_dir):
-    with open(os.path.join(output_dir, 'README.md'), 'w') as f:
-        f.write(content)
+    parent_dir = data['project_name']
+    os.makedirs(parent_dir, exist_ok=True)
+
+    # create the directory structure
+    for file in data['files']:
+        path = os.path.join(parent_dir, file['path'])
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w') as f:
+            f.write(file['content'])

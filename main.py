@@ -1,4 +1,6 @@
 from api_client import query_deepseek
+from generator import create_project
+
 import argparse
 import json
 import os
@@ -27,6 +29,7 @@ def main():
         print("Error: No valid project generated.")
 
     # Generate project
+    create_project(output_file)
 
 if __name__ == "__main__":
     main()

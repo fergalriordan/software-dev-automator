@@ -1,4 +1,4 @@
-from api_client import generate_code
+from api_client import query_deepseek
 
 import argparse
 
@@ -11,8 +11,9 @@ def main():
     # Process prompt
     print(f"Generating project: {args.prompt}")
     # API call and generation logic
-    structure = generate_code(args.prompt)
-    print("Generated project structure: ", structure)
+    response = query_deepseek(args.prompt)
+    print(response.json())
+    # Project generation logic
 
 if __name__ == "__main__":
     main()

@@ -17,6 +17,10 @@ def main():
     # Deepseek API call
     project_json = query_deepseek(args.prompt)  # Already a dictionary
 
+    # Ensure output directory exists
+    if not os.path.exists(args.output):
+        os.makedirs(args.output)
+
     if project_json: 
         output_file = os.path.join(args.output, 'output.json')
         

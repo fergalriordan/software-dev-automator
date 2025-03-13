@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import TextInput from "./TextInput";
+
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [text, setText] = useState("");
+
+  const handleSubmit = () => {
+    console.log("Project generation triggered with text: ", text);
+  };
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Automated Web Development with the DeepSeek API</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+      <p>
+        Enter a description of the website you want to build and click "Generate
+        Project". The DeepSeek API will be used to generate all the necessary files and
+        directories for the project. You can then download these files and
+        customize them as needed.
       </p>
+      <div className="card">
+        <form>
+          <TextInput value={text} onChange={setText} />
+          <Button type="button" onClick={handleSubmit}>Generate Project</Button>
+        </form>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

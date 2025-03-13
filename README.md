@@ -1,4 +1,4 @@
-# Automating Web Development using the DeepSeek-R1 mmodel through the DeepSeek API
+# Automating Web Development using the DeepSeek-R1 model through the DeepSeek API
 
 ### Project Overview
 

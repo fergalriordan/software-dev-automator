@@ -14,8 +14,8 @@ def query_deepseek(prompt):
         "Content-Type": "application/json",
     },
     data=json.dumps({
-        "model": "deepseek/deepseek-r1:free", # seems to give empty responses, probably due to high traffic
-        #"model": "deepseek/deepseek-chat:free",  # Alternative model
+        #"model": "deepseek/deepseek-r1:free", # seems to give empty responses, probably due to high traffic
+        "model": "deepseek/deepseek-chat:free",  # Alternative model
         "messages": [
         {
             "role": "user",

@@ -2,12 +2,12 @@
 import json
 import os
 
-def create_project(file):
+def create_project(file, path):
     # read the json file
     with open(file, 'r') as f:
         data = json.load(f)
 
-    parent_dir = data['project_name']
+    parent_dir = path + "/"+ data['project_name']
     os.makedirs(parent_dir, exist_ok=True)
 
     # create the directory structure

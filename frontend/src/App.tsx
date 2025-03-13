@@ -7,7 +7,8 @@ import "./App.css";
 function App() {
   const [text, setText] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     console.log("Project generation triggered with text: ", text);
   };
 
@@ -23,9 +24,9 @@ function App() {
         customize them as needed.
       </p>
       <div className="card">
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextInput value={text} onChange={setText} />
-          <Button type="button" onClick={handleSubmit}>Generate Project</Button>
+          <Button type="submit">Generate Project</Button>
         </form>
       </div>
     </>

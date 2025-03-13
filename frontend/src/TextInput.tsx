@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 
 interface TextInputProps {
   value: string;
@@ -6,25 +6,25 @@ interface TextInputProps {
 }
 
 const TextInput: React.FC<TextInputProps> = ({ value, onChange }) => {
-  const resizeTextArea = (element: HTMLTextAreaElement) => {
-    element.style.height = "auto";
-    element.style.height = `${element.scrollHeight}px`;
-  };
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(event.target.value);
-    resizeTextArea(event.target);
-  };
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+    }
+  }, [value]);
 
   return (
     <div className="form-group">
       <textarea
+        ref={textAreaRef}
         className="form-control"
         id="userInputTextArea"
         rows={3}
         style={{ width: "50%" }}
         value={value}
-        onChange={handleChange}
+        onChange={(e) => onChange(e.target.value)}
         placeholder="Be descriptive! The more detail you give, the better the results will be..."
       ></textarea>
     </div>

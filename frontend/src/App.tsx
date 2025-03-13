@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import TextInput from "./TextInput";
 
 import "./App.css";
 
 function App() {
   const [text, setText] = useState("");
+  const [showDownload, setShowDownload] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Project generation triggered with text: ", text);
+    
+    // Simulating immediate visibility of the download button (replace with backend response later)
+    setShowDownload(true);
   };
 
   return (
@@ -29,6 +33,17 @@ function App() {
           <Button type="submit">Generate Project</Button>
         </form>
       </div>
+
+      {showDownload && (
+        <Card className="mt-3">
+          <Card.Body>
+            <p>Your project files are ready to download!</p>
+            <Button variant="success" onClick={() => console.log("Download triggered")}>
+              Download Files
+            </Button>
+          </Card.Body>
+        </Card>
+      )}
     </>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Spinner } from "react-bootstrap";
+import { Button, Card, Spinner, Alert } from "react-bootstrap";
 import TextInput from "./TextInput";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ function App() {
   const [showDownload, setShowDownload] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -17,6 +18,7 @@ function App() {
 
     setIsLoading(true);
     setShowDownload(false);
+    setErrorMessage(null); // Clear any previous error messages
 
     try {
       const response = await axios.post("http://localhost:5000/generate", {
@@ -26,11 +28,47 @@ function App() {
       if (response.data.download_url) {
         setDownloadUrl(response.data.download_url);
         setShowDownload(true);
+      } else if (response.data.error) {
+        // Handle specific error message from the backend
+        setErrorMessage(response.data.error);
       } else {
-        console.error("Error: No download URL received.");
+        setErrorMessage(
+          "No download URL received. Please try again or use a different description."
+        );
       }
     } catch (error) {
       console.error("Error generating project:", error);
+
+      // Extract and display meaningful error messages
+      if (axios.isAxiosError(error) && error.response) {
+        // Handle structured error responses from the server
+        if (error.response.data && error.response.data.error) {
+          setErrorMessage(error.response.data.error);
+        } else if (error.response.status === 429) {
+          setErrorMessage(
+            "Too many requests. Please wait a moment and try again."
+          );
+        } else if (error.response.status === 500) {
+          setErrorMessage(
+            "Server error occurred. The AI model might be experiencing issues processing your request."
+          );
+        } else {
+          setErrorMessage(
+            `Error ${error.response.status}: ${error.response.statusText}`
+          );
+        }
+      } else if (error instanceof Error) {
+        // Handle network errors or other JS errors
+        if (error.message.includes("Network Error")) {
+          setErrorMessage(
+            "Network error. Please check your connection and ensure the server is running."
+          );
+        } else {
+          setErrorMessage(`Error: ${error.message}`);
+        }
+      } else {
+        setErrorMessage("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -55,24 +93,16 @@ function App() {
         <form onSubmit={handleSubmit}>
           <TextInput value={text} onChange={setText} />
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                  className="me-2"
-                />
-                Generating Project...
-              </>
-            ) : (
-              "Generate Project"
-            )}
+            Generate Project
           </Button>
         </form>
       </div>
+
+      {errorMessage && (
+        <Alert variant="danger" className="mt-3">
+          <p className="mb-0">{errorMessage}</p>
+        </Alert>
+      )}
 
       {isLoading && (
         <Card className="mt-3">

@@ -35,8 +35,25 @@
 
 .card {
   padding: 1em;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
 }
 
 .hint {
   color: #888;
+}
+
+/* Center the textarea within the form */
+.form-group {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Style the textarea */
+.form-control {
+  width: 100% !important;
+  max-width: 600px;
+  margin-bottom: 1rem;
 }

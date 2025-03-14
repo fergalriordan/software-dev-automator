@@ -22,7 +22,6 @@ const TextInput: React.FC<TextInputProps> = ({ value, onChange }) => {
         className="form-control"
         id="userInputTextArea"
         rows={3}
-        style={{ width: "50%" }}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Be descriptive! The more detail you give, the better the results will be..."

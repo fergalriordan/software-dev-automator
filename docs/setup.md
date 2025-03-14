@@ -9,3 +9,4 @@ Replace .env.example file with a real .env file containing a valid DeepSeek API 
 - Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 - .\venv\Scripts\Activate.ps1
 - pip install requests python-dotenv
+- npm run dev

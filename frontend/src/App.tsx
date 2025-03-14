@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Spinner, Alert } from "react-bootstrap";
 import TextInput from "./TextInput";
 import axios from "axios";
@@ -11,6 +11,18 @@ function App() {
   const [downloadUrl, setDownloadUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Clear error message after timeout
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000); // 5 seconds timeout
+
+      // Clean up the timer when component unmounts or error changes
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -99,7 +111,12 @@ function App() {
       </div>
 
       {errorMessage && (
-        <Alert variant="danger" className="mt-3">
+        <Alert
+          variant="danger"
+          className="mt-3"
+          dismissible
+          onClose={() => setErrorMessage(null)}
+        >
           <p className="mb-0">{errorMessage}</p>
         </Alert>
       )}

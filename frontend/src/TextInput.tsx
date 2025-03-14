@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import "./TextInput.css";
 
 interface TextInputProps {
   value: string;
@@ -16,10 +17,10 @@ const TextInput: React.FC<TextInputProps> = ({ value, onChange }) => {
   }, [value]);
 
   return (
-    <div className="form-group">
+    <div className="text-input-container">
       <textarea
         ref={textAreaRef}
-        className="form-control"
+        className="text-input-textarea"
         id="userInputTextArea"
         rows={3}
         value={value}

@@ -39,11 +39,15 @@ def generate_project():
 
     create_project(output_file, OUTPUT_DIR)
 
+    # Create ZIP from the project directory only, not the entire OUTPUT_DIR
+    project_dir = os.path.join(OUTPUT_DIR, project_json['project_name'])
+    
     # Ensure old ZIP file isn't included in new one
     if os.path.exists(ZIP_FILE):
         os.remove(ZIP_FILE)
-
-    shutil.make_archive(ZIP_FILE.replace('.zip', ''), 'zip', OUTPUT_DIR)
+    
+    # Create zip from just the project directory
+    shutil.make_archive(ZIP_FILE.replace('.zip', ''), 'zip', project_dir)
 
     return jsonify({'message': 'Project generated successfully', 'download_url': "/output/project.zip"}), 200
 

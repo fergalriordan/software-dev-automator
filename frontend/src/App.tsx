@@ -33,7 +33,8 @@ function App() {
     setErrorMessage(null); // Clear any previous error messages
 
     try {
-      const response = await axios.post("http://localhost:5000/generate", {
+      //const response = await axios.post("http://localhost:5000/generate", {
+      const response = await axios.post("https://software-dev-automator.onrender.com/generate", {
         prompt: text,
       });
 
@@ -87,7 +88,8 @@ function App() {
   };
 
   const handleDownload = () => {
-    window.open("http://localhost:5000" + downloadUrl, "_blank");
+    //window.open("http://localhost:5000" + downloadUrl, "_blank");
+    window.open("https://software-dev-automator.onrender.com" + downloadUrl, "_blank");
   };
 
   return (

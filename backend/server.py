@@ -13,6 +13,10 @@ CORS(app)
 OUTPUT_DIR = "./output"
 ZIP_FILE = os.path.join(OUTPUT_DIR, 'project.zip')
 
+@app.route('/')
+def home():
+    return "Welcome to the backend API! The Flask app is running successfully."
+
 @app.route('/generate', methods=['POST'])
 def generate_project():
     data = request.get_json()
